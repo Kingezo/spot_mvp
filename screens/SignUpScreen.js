@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, Pressable} from 'react-native';
 import { Ionicons } from "@expo/vector-icons";
 import ScreenWrapper from '../components/screenWrapper';
 import { colors } from '../theme/ColorThemes';
 import Button from '../constants/Button';
 import { useNavigation } from '@react-navigation/native';
-
-export default function SignInScreen() {
+export default function SignUpScreen() {
     const [isPasswordShown, setIsPasswordShown] = useState(false);
+   // const [email, setPassword] = useState('');
     const navigation = useNavigation();
-
+    
     return (
         <ScreenWrapper>
             <View style={{ flex: 1, marginHorizontal: 22 }}>
-                <Text style={{ fontSize: 22, fontWeight: 'bold', marginVertical: 12, color: colors.black }}> Sign In </Text>
-                <Text style={{ fontSize: 16, color: colors.black }}> Welcome Back! </Text>
+                <Text style={{ fontSize: 22, fontWeight: 'bold', marginVertical: 12, color: colors.black }}> Create Account </Text>
+                <Text style={{ fontSize: 16, color: colors.black }}> Save money and build credit today! </Text>
             </View>
 
             <View style={{ height: 575, marginBottom: 12 }}>
@@ -30,7 +30,7 @@ export default function SignInScreen() {
                     />
                 </View>
 
-                <Text style={{ fontSize: 16, fontWeight: 'bold', marginVertical: 8 }}> Password</Text>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', marginVertical: 8 }}> Create Password</Text>
                 <View style={{ width: "100%", height: 48, borderColor: colors.black, borderWidth: 1, borderRadius: 8, alignItems: "center", justifyContent: "center", paddingLeft: 22 }}>
                     <TextInput
                         placeholder='Enter your Password'
@@ -54,7 +54,7 @@ export default function SignInScreen() {
                     marginVertical: 6
                 }}>
                     <Button
-                        title="Sign In"
+                        title="Sign Up"
                         filled
                         style={{
                             marginTop: 22,
@@ -64,7 +64,7 @@ export default function SignInScreen() {
                 </View>
 
                 <View style={{ alignItems: 'center', marginVertical: 20 }}>
-                    <Text style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 10 }}> Or Sign in With</Text>
+                    <Text style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 10 }}> Or Sign up With</Text>
                     <View style={{ width: "100%", flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                         <TouchableOpacity
                             onPress={() => console.log("Pressed")}
@@ -78,17 +78,7 @@ export default function SignInScreen() {
                     justifyContent: "center",
                     marginVertical: 22
                 }}>
-                    <Text style={{ fontSize: 16, color: colors.black }}>Don't have an account ? </Text>
-                    <Pressable
-                        onPress={() => navigation.navigate("SignUp")}
-                    >
-                        <Text style={{
-                            fontSize: 16,
-                            color: colors.primary,
-                            fontWeight: "bold",
-                            marginLeft: 6
-                        }}>Register</Text>
-                    </Pressable>
+                    
                 </View>
                 </View>
             </View>
