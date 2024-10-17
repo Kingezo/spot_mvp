@@ -4,16 +4,18 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
 import LogInScreen from '../screens/LogInScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
+import SignInScreen from '../screens/SignInScreen';
 
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Welcome'>
+      <Stack.Navigator initialRouteName='SignIn'>
         <Stack.Screen options= {{headerShown: false}}name="Home" component={HomeScreen} />
         <Stack.Screen options= {{headerShown: false}}name="LogIn" component={LogInScreen} />
         <Stack.Screen options= {{headerShown: false}}name="Welcome" component={WelcomeScreen} />
+        <Stack.Screen options= {{headerShown: false}}name="SignIn" component={SignInScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
