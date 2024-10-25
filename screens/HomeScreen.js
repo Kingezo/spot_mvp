@@ -119,8 +119,8 @@ const HomeScreen = () => {
 
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                     <View>
-                        <Text style= {{fontSize:26, color: 'white' }}> Welcome Back,</Text>
-                        <Text style= {{fontSize:26, opacity: 0.6, color:'white'}}> Gnoulelein Tako</Text>
+                        <Text style= {{fontSize:26, color: 'black' }}> Welcome Back,</Text>
+                        <Text style= {{fontSize:26, opacity: 0.6, color:'black'}}> Gnoulelein Tako</Text>
                         </View>
                         <View>
                         <Image 
@@ -139,9 +139,9 @@ const HomeScreen = () => {
                     <View style={{flexDirection: 'row'}}>
                         <TouchableOpacity style={styles.AddUser}>
                             <View style={styles.AddUserIconbg}>
-                            <MaterialIcons name = 'add' color = 'white' size ={28} style = {{alignSelf: 'center'}} />
+                            <MaterialIcons name = 'add' color = 'black' size ={28} style = {{alignSelf: 'center'}} />
                             </View>
-                            <Text style={{color: '#fff'}}>Add Users</Text>
+                            <Text style={{color: 'white'}}>Add Users</Text>
                         </TouchableOpacity>
                         <FlatList
                         horizontal
@@ -151,7 +151,7 @@ const HomeScreen = () => {
                             return(
                                 <View style={styles.AddUser}>
                                     <Image style={styles.AddUserIconbg} source={{uri: item.userImage}}/>
-                                    <Text style={{color: '#fff'}}> {item.userName}</Text>
+                                    <Text style={{color: 'white'}}> {item.userName}</Text>
                                 </View>
                             )
                         }}
@@ -170,10 +170,10 @@ const HomeScreen = () => {
             height={height + 20}
             friction={0.9}
             >
-                <View style={{flex: 1, backgroundColor: '#0c0c0c', borderRadius:24, padding:14}}>
+                <View style={{flex: 1, backgroundColor: '#F0FFF0', borderRadius:24, padding:14}}>
                     <View style={styles.PanelHandle}></View>
                     <View>
-                        <Text style = {{marginVertical: 16, color: '#fff'}}>Recent Transactions</Text>
+                        <Text style = {{marginVertical: 16, color: '#F0FFF0000'}}>Recent Transactions</Text>
                     </View>
 
                     <View style={{height: 500, paddingBottom: 10}}>
@@ -188,12 +188,12 @@ const HomeScreen = () => {
                                         <Image source={{uri: item.userImage}} style={styles.PanelImage} />
                                       </View>
                                       <View>
-                                        <Text style={{fontSize: 14, color: '#fff'}}>{item.userName}</Text>
-                                        <Text style={{fontSize: 14, color: '#fff'}}>{item.transactionDate}</Text>
+                                        <Text style={{fontSize: 14, color: '#F0FFF0000'}}>{item.userName}</Text>
+                                        <Text style={{fontSize: 14, color: '#F0FFF0000'}}>{item.transactionDate}</Text>
                                         </View>
                         </View>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                          <Text style={{fontSize: 16, color: '#fff', marginHorizontal: 2}}>{item.amount}</Text>
+                          <Text style={{fontSize: 16, color: '#F0FFF0000', marginHorizontal: 2}}>{item.amount}</Text>
 
                           {item.credit ? (
                             <MaterialIcons name='arrow-drop-up' size={22} color='green' />
@@ -224,7 +224,7 @@ const HomeScreen = () => {
     const styles = StyleSheet.create({
         container: {
             flex:1,
-            backgroundColor: '#000',
+            backgroundColor: '#F0FFF0',
             paddingTop: 0
         },
         ProfileImage: {
@@ -241,21 +241,22 @@ const HomeScreen = () => {
             position: 'abosolute',
             right: 6,
             borderWidth: 2,
-            borderColor: '#000'
+            borderColor: '#000000'
         },
         AddUser: {
             height: 140,
             width:100,
             justifyContent: 'center',
             alignItems:'center',
-            backgroundColor: '#0c0c0c',
+            backgroundColor: '#50C878',
             borderRadius: 10,
             marginRight: 14
+            
         },
         AddUserIconbg: {
             width: 70,
             height: 70,
-            backgroundColor:'#000',
+            backgroundColor:'#F0FFF0',
             borderRadius: 10,
             marginBottom: 10,
             justifyContent: 'center'
@@ -281,19 +282,19 @@ const HomeScreen = () => {
         PanelImage: {
             width: 30,
             height: 30,
-            backgroundColor: '#000',
+            backgroundColor: '#FFFFFF',
             borderRadius: 40
         },
         PanelButton: {
             padding:14,
             width: 200,
             justifyContent: 'center',
-            backgroundColor: '#1c1c1c',
+            backgroundColor: 'gray',
             borderRadius: 10
           },
           PanelButtonText: {
             fontSize: 16,
-            color: '#fff',
+            color: 'white',
             alignSelf: 'center'
           }
     })
