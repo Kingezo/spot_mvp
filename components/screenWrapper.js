@@ -1,12 +1,15 @@
-import { View, StatusBar, SafeAreaView } from 'react-native';
 import React from 'react';
+import { View, SafeAreaView, StatusBar } from 'react-native';
 
-export default function ScreenWrapper({ children }) {
-    let statusBarHeight = StatusBar.currentHeight || 0;
 
-    return (
-        <SafeAreaView style={{ flex: 1, paddingTop: statusBarHeight }}>
-            {children}
-        </SafeAreaView>
-    );
+export default function ScreenWrapper({ children, title, navigation }) {
+  let statusBarHeight = StatusBar.currentHeight || 0;
+
+  return (
+    <SafeAreaView style={{ flex: 1, paddingTop: statusBarHeight }}>
+      <View style={{ flex: 1 }}>
+        {children}
+      </View>
+    </SafeAreaView>
+  );
 }

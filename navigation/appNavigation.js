@@ -7,6 +7,7 @@ import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import SearchScreen from '../screens/SearchScreen';
+import CustomHeader from '../components/CustomHeader';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
@@ -33,15 +34,16 @@ function TabNavigator() {
         tabBarActiveTintColor: '#00A86B',
         tabBarInactiveTintColor: '#50C878',
         tabBarStyle: { 
-          backgroundColor: '#F0FFF0',      // Background color of tab bar
+          backgroundColor: 'white',      // Background color of tab bar
           height: 60,                      // Height of the tab bar
           borderTopWidth: 0,               // Border style (optional)
         }
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-      <Tab.Screen name="Search" component={SearchScreen} options={{ headerShown: false }} />
       <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+      <Tab.Screen name="Search" component={SearchScreen} options={{ headerShown: false }} />
+      
     </Tab.Navigator>
   );
 }
@@ -49,12 +51,19 @@ function TabNavigator() {
 export default function AppNavigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Welcome'>
+      <Stack.Navigator initialRouteName= 'Main' screenOptions={({ navigation, route }) => ({
+          CustomHeader: () => (
+            <CustomHeader title={route.name} navigation={navigation} />
+          ),
+        })}
+      >
         <Stack.Screen options= {{headerShown: false}}name="Welcome" component={WelcomeScreen} />
         <Stack.Screen options= {{headerShown: false}}name="SignIn" component={SignInScreen} />
         <Stack.Screen options= {{headerShown: false}}name="SignUp" component={SignUpScreen} />
       
         <Stack.Screen options ={{ headerShown: false }} name="Main" component={TabNavigator} />
+
+     
       </Stack.Navigator>
       
     </NavigationContainer>

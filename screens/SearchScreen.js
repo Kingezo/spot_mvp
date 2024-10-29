@@ -1,13 +1,104 @@
-import * as React from 'react';
-import { View, Text } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import ScreenWrapper from '../components/screenWrapper';
 
-export default function SearchScreen({ navigation }) {
-    return (
-        <View style={{ flex: 1, alignItems:'center', justifyContent: 'center' }}>
-            <Text
-                onPress={() => navigation.navigate('Search')}
-                style={{ fontSize:26, fontWeight: 'bold' }}> Search Screen</Text>
-        </View>
-    );
+const SearchScreen = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  
+  // Mock data for testing purposes
+  const data = [
+    { id: '1', title: 'React Native Guide' },
+    { id: '2', title: 'React Navigation' },
+    { id: '3', title: 'Using Hooks in React' },
+    { id: '4', title: 'React Native UI Design' },
+    { id: '5', title: 'Understanding State Management' },
+  ];
 
-}
+  // Function to handle search filtering
+  const handleSearch = (text) => {
+    setSearchTerm(text);
+    if (text) {
+      const filteredData = data.filter((item) => 
+        item.title.toLowerCase().includes(text.toLowerCase())
+      );
+      setSearchResults(filteredData);
+    } else {
+      setSearchResults([]);
+    }
+  };
+
+  // Render each search result item
+  const renderItem = ({ item }) => (
+    <TouchableOpacity style={styles.resultItem}>
+      <Text style={styles.resultText}>{item.title}</Text>
+    </TouchableOpacity>
+  );
+
+  return (
+    <ScreenWrapper>
+    <View style={styles.container}>
+      <Text style={styles.header}>Search</Text>
+      
+      <TextInput
+        style={styles.searchBar}
+        placeholder="Search..."
+        value={searchTerm}
+        onChangeText={handleSearch}
+      />
+
+      {searchResults.length > 0 ? (
+        <FlatList
+          data={searchResults}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+        />
+      ) : (
+        <Text style={styles.placeholder}>Search for someone to start a group with</Text>
+      )}
+    </View>
+    </ScreenWrapper>
+
+  );
+};
+
+export default SearchScreen;
+
+// Styles for the search screen
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: 'white',
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    color: '#333',
+  },
+  searchBar: {
+    height: 40,
+    borderColor: '#ddd',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    marginBottom: 16,
+    backgroundColor: '#fff',
+  },
+  placeholder: {
+    marginTop: 20,
+    fontSize: 16,
+    color: '#888',
+    textAlign: 'center',
+  },
+  resultItem: {
+    padding: 12,
+    borderBottomColor: '#ccc',
+    borderBottomWidth: 1,
+  },
+  resultText: {
+    fontSize: 18,
+    color: '#333',
+  },
+});
