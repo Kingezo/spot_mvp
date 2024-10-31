@@ -55,6 +55,7 @@ export default function SignInScreen() {
                 }}>
                     <Button
                         title="Sign In"
+                        onPress={() => navigation.navigate('Home')}
                         filled
                         style={{
                             marginTop: 22,
