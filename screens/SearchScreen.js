@@ -8,11 +8,11 @@ const SearchScreen = () => {
   
   // Mock data for testing purposes
   const data = [
-    { id: '1', title: 'React Native Guide' },
-    { id: '2', title: 'React Navigation' },
-    { id: '3', title: 'Using Hooks in React' },
-    { id: '4', title: 'React Native UI Design' },
-    { id: '5', title: 'Understanding State Management' },
+    { id: '1', title: 'Biweekly Payments' },
+    { id: '2', title: 'Weekly Payments' },
+    { id: '3', title: '$2000 Pools' },
+    { id: '4', title: '$400 payments' },
+    { id: '5', title: 'Pools with less than 5 people' },
   ];
 
   // Function to handle search filtering
@@ -42,7 +42,7 @@ const SearchScreen = () => {
       
       <TextInput
         style={styles.searchBar}
-        placeholder="Search..."
+        placeholder="Coming Soon..."
         value={searchTerm}
         onChangeText={handleSearch}
       />
@@ -54,7 +54,7 @@ const SearchScreen = () => {
           renderItem={renderItem}
         />
       ) : (
-        <Text style={styles.placeholder}>Search for someone to start a group with</Text>
+        <Text style={styles.placeholder}>Search for someone to start a group with!</Text>
       )}
     </View>
     </ScreenWrapper>

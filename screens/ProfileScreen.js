@@ -117,22 +117,28 @@ const ProfileScreen = () => {
 
     
     return (
+        
         <ScreenWrapper>
+           
              <CustomHeader 
             />
+          
         <View style={[styles.container, {paddingTop:25}]}>
-            <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+            
+                <View style={styles.ScoreContainer}>
             <View style={{flex:1, alignItems: 'center', paddingTop: '50',  borderBlockColor: 'black',  }}>
                 <View style = {styles.ScoreBlock}>
                 <Text style={{ color: "black",  fontSize: 24, alignItems:'center',}}> Spot.Score</Text>
                 <Text style={{ color: "#00A86B",  fontSize: 36, alignItems:'center',}}> 81</Text>
                 <Text style={{ color: "black",  fontSize: 24, alignItems:'center',}}> Good!</Text>
             </View>
+            </View>
             
         </View>
         
         
-        <View style = {{marginTop: 20 }}>
+        <View style = {styles.BankContainer}>
                 <Text style={{ color: "black",  fontSize: 24, alignItems:'center',  fontWeight: 'bold',}}> Spot.Bank</Text>
                 <View style = {{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', paddingHorizontal: '20'}}>
                 <Text style={{ color: "#00A86B",  fontSize: 24, alignItems:'center',}}> $500.00</Text>
@@ -167,17 +173,32 @@ const ProfileScreen = () => {
                 </View>
       
                 </View>
-            </ScrollView>
+                <View style = {styles.BankContainer2}>
+                <Text style={{ color: "black",  fontSize: 24, alignItems:'center',  fontWeight: 'bold',}}>Spot.credit</Text>
+                <View style = {{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', paddingHorizontal: '20'}}>
+                <Text style={{ color: "black",  fontSize: 24, alignItems:'center',}}> $500.00</Text>
+                <TouchableOpacity onPress={() => console.log("Transfer pressed")}>
+                <Text style={ styles.ButtonBlock}> See latest score</Text>
+      </TouchableOpacity>
+      </View>
+
+                </View>
+                <View>
+                    <Text> Brough to you by Spot.Financial LLC</Text>
+                </View>
+            
+                </ScrollView>
+               
                     <View style={{flex:1}}>
+                
                     <SlidingUpPanel 
                     ref={ModalRef}
-                    draggableRange={dragRange}
+                    draggableRange={dragRange} 
                     animatedValue={_draggedValue}
                     backdropOpacity={0}
                     snappingPoints={[360]}
                     height={height + 20}
                     friction={0.9}
-                    
                     >
                         <View style={{flex: 1, backgroundColor: 'white', borderColor: 'black', borderWidth: 1, borderRadius:24, padding:14}}>
                             <View style={styles.PanelHandle}></View>
@@ -224,9 +245,11 @@ const ProfileScreen = () => {
                     </View>
                     </SlidingUpPanel>
                 </View>
-                
+               
                 </View>
+               
                 </ScreenWrapper>
+                 
                
 
   );
@@ -323,7 +346,65 @@ const ProfileScreen = () => {
             fontSize: 16,
             color: 'white',
             alignSelf: 'center'
-          }
+          },
+          // Containers styles
+          BankingInfoContainer: {
+            padding: 20,
+            backgroundColor: '#F0FFF0',
+            borderRadius: 10,
+            borderColor: 'black',
+            marginVertical: 10,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.2,
+            shadowRadius: 5,
+            elevation: 5,
+        },
+        bankInfo: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingHorizontal: 20,
+            marginTop: 10,
+        },
+        BankContainer: {
+            padding: 20,
+            backgroundColor: 'white',
+            borderRadius: 10,
+            borderColor: 'black',
+            marginVertical: 10,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.2,
+            shadowRadius: 5,
+            elevation: 5,
+        },
+        ScoreContainer: {
+            padding: 20,
+            backgroundColor: 'white',
+            borderRadius: 10,
+            borderColor: 'black',
+            marginVertical: 10,
+            alignItems: 'center',
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.2,
+            shadowRadius: 5,
+            elevation: 5,
+        },
+        BankContainer2: {
+            padding: 20,
+            backgroundColor: 'rgb(200,260,240)',
+            borderRadius: 10,
+            borderColor: 'black',
+            marginVertical: 10,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.2,
+            shadowRadius: 5,
+            elevation: 5,
+            marginBottom: 100,
+        },
         
     })
 //}
