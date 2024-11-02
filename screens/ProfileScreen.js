@@ -221,7 +221,7 @@ const ProfileScreen = () => {
             </View>
       </View>
       <View>
-      <Text style={{ color: "black",  fontSize: 12+, alignItems:'center', marginTop: 10, marginBottom: 10}}> Learn more about what Spot can do to improve your score! </Text>
+      <Text style={{ color: "black",  fontSize: 12, alignItems:'center', marginTop: 10, marginBottom: 10}}> Learn more about what Spot can do to improve your score! </Text>
       </View>
       <View style={{flexDirection: 'row',justifyContent: "space-between", alignItems: 'center', paddingHorizontal: '20'}}>
       <TouchableOpacity onPress={() => console.log("Settings pressed")}>
