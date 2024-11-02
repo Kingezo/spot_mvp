@@ -3,6 +3,7 @@ import React, {useState, useRef } from 'react'
 import ScreenWrapper from '../components/screenWrapper';
 import CustomHeader from '../components/CustomHeader';
 import SlidingUpPanel from 'rn-sliding-up-panel'
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 //import { icons } from '../constants'
@@ -147,8 +148,12 @@ const ProfileScreen = () => {
       </TouchableOpacity>
       
       </View>
-      <View  style = {{ marginTop: 30}}>
-                    <Text style={{ opacity:0.6, marginBottom:10, color: 'black', fontSize: 24, fontWeight: 'bold', flex: 1 }} > Banking Info </Text>
+     
+    
+      
+                </View>
+                <View  style = {styles.BankContainer}>
+                    <Text style={{ marginBottom:10, color: 'black', fontSize: 24, fontWeight: 'bold', flex: 1 }} >Banking Info </Text>
                     <View style={{flexDirection: 'row'}}>
                         <TouchableOpacity style={styles.AddUser}>
                             <View style={styles.AddBankIconBg}>
@@ -171,20 +176,48 @@ const ProfileScreen = () => {
                         />
                     </View>
                 </View>
-      
-                </View>
+           
                 <View style = {styles.BankContainer2}>
-                <Text style={{ color: "black",  fontSize: 24, alignItems:'center',  fontWeight: 'bold',}}>Spot.credit</Text>
+                <Text style={{ color: "black",  fontSize: 24, alignItems:'center',  fontWeight: 'bold', marginBottom: 5,}}>Credit Journey</Text>
                 <View style = {{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', paddingHorizontal: '20'}}>
-                <Text style={{ color: "black",  fontSize: 24, alignItems:'center',}}> $500.00</Text>
-                <TouchableOpacity onPress={() => console.log("Transfer pressed")}>
-                <Text style={ styles.ButtonBlock}> See latest score</Text>
+                <Text style={{ color: "black",  fontSize: 15, alignItems:'center', marginBottom: 10,}}>See how spot has impacted your credit score! </Text>
+      </View>
+      <View>
+      <Image 
+                source={require('../assets/images/credit-icon2.jpeg')}
+                style={styles.creditImage}
+            />
+            <View style={{flexDirection: 'row'}}>
+            <Text style={{ color: "#00A86B",  fontSize: 36,}}>741</Text>
+           
+            </View>
+            <View style={{flexDirection: 'row'}}>
+            <MaterialIcons name='arrow-drop-up' size={22} color='green' />
+            <Text style={{ color: "green",  fontSize: 12, marginTop: 2}}> 2 points</Text>
+            </View>
+      </View>
+      <View>
+      <Text style={{ color: "black",  fontSize: 12, alignItems:'center', marginTop: 10, marginBottom: 10}}> Learn more about what Spot can do to improve your score! </Text>
+      </View>
+      <View style={{flexDirection: 'row',justifyContent: "space-between", alignItems: 'center', paddingHorizontal: '20'}}>
+      <TouchableOpacity onPress={() => console.log("Settings pressed")}>
+        <Ionicons name="help-circle" size={24} color="#00A86B" />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => console.log("Transfer pressed")}>
+                <Text style={ styles.ButtonBlock}> See details</Text>
       </TouchableOpacity>
       </View>
 
                 </View>
+                <View style={styles.linkedBankCard}>
+        <Text style={styles.bankName}>      Earn up to $50 when you</Text>
+        <TouchableOpacity>
+            <Text style={{fontSize: 16, color: 'green',}}> Spot friends!</Text>
+        </TouchableOpacity>
+
+      </View>
                 <View>
-                    <Text> Brough to you by Spot.Financial LLC</Text>
+                    <Text> Brought to you by Spot.Financial LLC</Text>
                 </View>
             
                 </ScrollView>
@@ -403,8 +436,38 @@ const ProfileScreen = () => {
             shadowOpacity: 0.2,
             shadowRadius: 5,
             elevation: 5,
-            marginBottom: 100,
+            
         },
+        creditImage: {
+            width:55,
+            height:55,
+            borderRadius:40,
+            alignItems: 'center',
+            justifyContent: 'center',
+            //marginLeft: 125
+            //aspectRatio: 1
+        },
+        linkedBankCard: {
+            backgroundColor: '#ffffff',
+            borderRadius: 10,
+            padding: 20,
+            shadowColor: '#000',
+            shadowOpacity: 0.1,
+            shadowRadius: 10,
+            elevation: 5,
+            marginBottom: 100,
+            flexDirection: 'row',
+          },
+          linkedBankTitle: {
+            fontSize: 18,
+            color: '#333',
+            fontWeight: 'bold',
+            marginBottom: 5,
+          },
+          bankName: {
+            fontSize: 16,
+            color: '#555',
+          },
         
     })
 //}

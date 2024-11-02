@@ -147,8 +147,8 @@ const HomeScreen = () => {
 
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                     <View>
-                        <Text style= {{fontSize:26, color: 'black' }}> Welcome Back,</Text>
-                        <Text style= {{fontSize:26, opacity: 0.6, color:'black'}}> Gnoulelein Tako</Text>
+                        <Text style= {{fontSize:26, color: 'black' }}>Welcome Back,</Text>
+                        <Text style= {{fontSize:26, opacity: 0.6, color:'black'}}>Gnoulelein Tako</Text>
                         </View>
                         <View>
                         <Image 
@@ -161,9 +161,9 @@ const HomeScreen = () => {
                 <View>
                    
                 </View>
-
+ 
                 <View>
-                    <Text style={{ opacity:0.6, marginBottom:10}} > Invite To Group </Text>
+                    <Text style={{ opacity:0.6, marginBottom:10}} >Invite To Group </Text>
                     <View style={{flexDirection: 'row'}}>
                         <TouchableOpacity style={styles.AddUser}>
                             <View style={styles.AddUserIconbg}>
@@ -205,13 +205,22 @@ const HomeScreen = () => {
     </View>
     <ProgressBar progress={progress} />
         <TouchableOpacity style={styles.spotGroupButton}>
-          <Text style={styles.buttonText}>Spot Group</Text>
+          <Text style={styles.buttonText}>Spot.Group</Text>
+        </TouchableOpacity>
+      </View>
+      
+      <View style={styles.linkedBankCard}>
+        <Text style={styles.linkedBankTitle}>Spot.Credit</Text>
+        <Text style={styles.bankName}>Build your credit with Spot.Financial</Text>
+        <Image style={styles.creditImage} source={require('../assets/images/credit-cartoon.jpg')} />
+        <TouchableOpacity style={styles.spotGroupButton}>
+          <Text style={styles.buttonText}>Get Started</Text>
         </TouchableOpacity>
       </View>
 
       {/* Linked Bank Info */}
       <View style={styles.linkedBankCard}>
-        <Text style={styles.linkedBankTitle}>Spot Deals</Text>
+        <Text style={styles.linkedBankTitle}>Spot.Deals</Text>
         <Text style={styles.bankName}>Check out special deals from retailers near you that you can save for!</Text>
       </View>
     </View>
@@ -380,6 +389,7 @@ const HomeScreen = () => {
             shadowOpacity: 0.1,
             shadowRadius: 10,
             elevation: 5,
+            marginBottom: 10,
           },
           linkedBankTitle: {
             fontSize: 18,
@@ -414,6 +424,21 @@ const HomeScreen = () => {
             borderRadius: 15,
             overflow: 'hidden',
         },
+        creditImage: {
+          width:300,
+          height:300,
+          borderRadius:10,
+          justifyContent: 'center',   // Center image
+          alignItems: 'center',
+          marginLeft: 10,
+          elevation: 5,
+          shadowColor: '#000',
+          borderWidth: 2,
+          boarderColor: 'black',
+          marginBottom: 10,
+          
+
+        }
         
     })
 //}

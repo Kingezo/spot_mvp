@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   progress: {
     height: '100%',
-    backgroundColor: '#76c7c0',
+    backgroundColor: 'rgb(50,300,210)',
     borderRadius: 10,
   },
 });
