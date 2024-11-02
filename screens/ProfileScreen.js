@@ -4,6 +4,7 @@ import ScreenWrapper from '../components/screenWrapper';
 import CustomHeader from '../components/CustomHeader';
 import SlidingUpPanel from 'rn-sliding-up-panel'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import ProgressBar from '../components/ProgressBar';
 
 
 //import { icons } from '../constants'
@@ -116,23 +117,36 @@ const ProfileScreen = () => {
 
     const ModalRef = useRef(null);
 
+       // Progress Bar
+   const [progress, setProgress] = useState(progress);
+
     
     return (
         
-        <ScreenWrapper>
+        
            
-             <CustomHeader 
-            />
+             
           
         <View style={[styles.container, {paddingTop:25}]}>
+            <CustomHeader 
+            />
         <ScrollView showsVerticalScrollIndicator={false}>
             
                 <View style={styles.ScoreContainer}>
-            <View style={{flex:1, alignItems: 'center', paddingTop: '50',  borderBlockColor: 'black',  }}>
-                <View style = {styles.ScoreBlock}>
-                <Text style={{ color: "black",  fontSize: 24, alignItems:'center',}}> Spot.Score</Text>
-                <Text style={{ color: "#00A86B",  fontSize: 36, alignItems:'center',}}> 81</Text>
-                <Text style={{ color: "black",  fontSize: 24, alignItems:'center',}}> Good!</Text>
+            <View style={{flex:1, paddingTop: '50',  borderBlockColor: 'black',  }}>
+                <View >
+                <Text style={{ color: "black",  fontSize: 24, fontWeight:'bold' }}>Spot.Score</Text>
+                <Text style={{  fontSize: 36, }}>81</Text>
+                <ProgressBar progress={81} showPercentSign={true} />
+                
+
+            </View>
+            <View style={{flexDirection:'row'}}>
+            
+        <TouchableOpacity>
+            <Text style={{fontSize: 16, color: 'green',}}>Share this info </Text>
+        </TouchableOpacity>
+        <Text style={styles.bankName}>to increase your Spot.Score</Text>
             </View>
             </View>
             
@@ -140,20 +154,30 @@ const ProfileScreen = () => {
         
         
         <View style = {styles.BankContainer}>
-                <Text style={{ color: "black",  fontSize: 24, alignItems:'center',  fontWeight: 'bold',}}> Spot.Bank</Text>
+                <Text style={{ color: "black",  fontSize: 24, alignItems:'center',  fontWeight: 'bold', marginBottom: 5,}}>Spot.Bank</Text>
                 <View style = {{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', paddingHorizontal: '20'}}>
-                <Text style={{ color: "#00A86B",  fontSize: 24, alignItems:'center',}}> $500.00</Text>
-                <TouchableOpacity onPress={() => console.log("Transfer pressed")}>
-                <Text style={ styles.ButtonBlock}> Transfer</Text>
-      </TouchableOpacity>
+                <Text style={{ fontSize: 24, alignItems:'center',}}>$500.00</Text>
+                
+      
       
       </View>
-     
+     <View style={{flexDirection: 'row', marginTop: 15,}}>
+        <Text style={styles.bankName}>Account: ***0000 </Text>
+        <Text style={styles.bankName}>     Routing: ***000 </Text>
+     </View>
+     <View style={{flexDirection:'row', justifyContent: 'space-around', padding: 16,}}>
+     <TouchableOpacity style={ styles.ButtonBlock} onPress={() => console.log("Transfer pressed")}>
+                <Text style={styles.buttonText}>Transfer to Bank</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={ styles.ButtonBlock} onPress={() => console.log("Transfer pressed")}>
+                <Text style={styles.buttonText}>Spot.Buy</Text>
+      </TouchableOpacity>
+     </View>
     
       
                 </View>
                 <View  style = {styles.BankContainer}>
-                    <Text style={{ marginBottom:10, color: 'black', fontSize: 24, fontWeight: 'bold', flex: 1 }} >Banking Info </Text>
+                    <Text style={{ marginBottom:15, color: 'black', fontSize: 24, fontWeight: 'bold', flex: 1 }} >Banking Info </Text>
                     <View style={{flexDirection: 'row'}}>
                         <TouchableOpacity style={styles.AddUser}>
                             <View style={styles.AddBankIconBg}>
@@ -188,7 +212,7 @@ const ProfileScreen = () => {
                 style={styles.creditImage}
             />
             <View style={{flexDirection: 'row'}}>
-            <Text style={{ color: "#00A86B",  fontSize: 36,}}>741</Text>
+            <Text style={{ color: "black",  fontSize: 36,}}>741</Text>
            
             </View>
             <View style={{flexDirection: 'row'}}>
@@ -197,7 +221,7 @@ const ProfileScreen = () => {
             </View>
       </View>
       <View>
-      <Text style={{ color: "black",  fontSize: 12, alignItems:'center', marginTop: 10, marginBottom: 10}}> Learn more about what Spot can do to improve your score! </Text>
+      <Text style={{ color: "black",  fontSize: 12+, alignItems:'center', marginTop: 10, marginBottom: 10}}> Learn more about what Spot can do to improve your score! </Text>
       </View>
       <View style={{flexDirection: 'row',justifyContent: "space-between", alignItems: 'center', paddingHorizontal: '20'}}>
       <TouchableOpacity onPress={() => console.log("Settings pressed")}>
@@ -281,7 +305,7 @@ const ProfileScreen = () => {
                
                 </View>
                
-                </ScreenWrapper>
+              
                  
                
 
@@ -307,7 +331,7 @@ const ProfileScreen = () => {
             borderRadius: 10,
             marginRight: 14,
             borderColor: 'black',
-            borderWidth: 2,
+            //borderWidth: 2,
             shadowColor: '#000',        // Shadow color
             shadowOffset: { width: 0, height: 2 }, // Shadow offset to create an undershadow
             shadowOpacity: 0.25,        // Shadow transparency
@@ -317,9 +341,9 @@ const ProfileScreen = () => {
             
         },
         AddBankIconBg: {
-            width: 70,
-            height: 70,
-            backgroundColor:'#F0FFF0',
+            width: '100%',
+            height: '50%',
+            backgroundColor:'rgb(220 ,220 ,220 )',
             borderRadius: 10,
             marginBottom: 10,
             justifyContent: 'center'
@@ -339,10 +363,19 @@ const ProfileScreen = () => {
         ButtonBlock: {
             padding:8,
             borderColor: 'black',
-            borderWidth: 1,
-            borderRadius: 10,
-            backgroundColor: '#F0FFF0'
+            paddingVertical: 10,
+            paddingHorizontal: 20,
+            borderRadius: 25,
+            backgroundColor: 'rgb(200,260,240)'
             
+            
+        },
+        buttonText:{
+            color: 'black',
+            fontSize: 16,
+            fontWeight: 'bold',
+            textAlign: 'center',
+
         },
         PanelHandle: {
             height: 5,
@@ -418,7 +451,7 @@ const ProfileScreen = () => {
             borderRadius: 10,
             borderColor: 'black',
             marginVertical: 10,
-            alignItems: 'center',
+            //alignItems: 'center',
             shadowColor: '#000',
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.2,

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import ScreenWrapper from '../components/screenWrapper';
 //import { colors } from '../theme/ColorThemes';
 import Button from '../constants/Button';
@@ -10,8 +10,8 @@ import { useNavigation } from '@react-navigation/native';
 export default function WelcomeScreen() {
     const navigation = useNavigation();
     return (
-        <ScreenWrapper>
-          <View >
+        
+          <View style={styles.container}>
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                 <Image 
                 source={require('../assets/images/Piggy.jpg')} className="h-96 w-96 shadow" 
@@ -28,7 +28,10 @@ export default function WelcomeScreen() {
                         filled
                         style={{
                             marginTop: 100,
-                            width: "100%",
+                            width: "95%",
+                            justifyContent: 'center',
+                            allignContent: 'center',
+                            marginLeft: 8,
                         }}
                     />
                 <Button
@@ -37,20 +40,30 @@ export default function WelcomeScreen() {
                         filled
                         style={{
                             marginTop: 22,
-                            width: "100%",
+                            width: "95%",
+                            justifyContent: 'center',
+                            allignContent: 'center',
+                            marginLeft: 8,
                          
                         }}
                     />
-                <TouchableOpacity onPress={()=> signIn()} className="shadow p-3 rounded-full bg-white" >
-                  <View >
-                   
-                  </View>
-                    
-                </TouchableOpacity>
+                
             </View>
           </View>
-        </ScreenWrapper>
-      )
-    }
+     
+    )}
+const styles = StyleSheet.create({
+  container: {
+    flex:1,
+    backgroundColor: 'white',
+    paddingTop: 0,
+    justifyContent: 'center',
+    allignContent: 'center',
+},
+  
+})
+
+  
+    
 
     

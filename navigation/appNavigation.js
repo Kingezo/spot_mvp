@@ -40,9 +40,12 @@ function TabNavigator() {
         }
       })}
     >
+
+
       <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
       <Tab.Screen name="Search" component={SearchScreen} options={{ headerShown: false }} />
       <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+      
       
     </Tab.Navigator>
   );
@@ -51,7 +54,7 @@ function TabNavigator() {
 export default function AppNavigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName= 'Main' screenOptions={({ navigation, route }) => ({
+      <Stack.Navigator initialRouteName= 'Welcome' screenOptions={({ navigation, route }) => ({
           CustomHeader: () => (
             <CustomHeader title={route.name} navigation={navigation} />
           ),

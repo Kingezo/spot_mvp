@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function CustomHeader({ title, navigation }) {
   return (
-    <SafeAreaView >
+    
         <View style={styles.headerContainer}>
            
             <View style={styles.userInfoWrapper}>
@@ -20,10 +20,10 @@ export default function CustomHeader({ title, navigation }) {
             </View>
 
       <TouchableOpacity onPress={() => console.log("Settings pressed")}>
-        <Ionicons name="settings-outline" size={24} color="#00A86B" />
+        <Ionicons name="settings-outline" size={24} color="black" />
       </TouchableOpacity>
     </View>
-    </SafeAreaView>
+ 
    
   );
 }
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(200,260,240)',
     paddingHorizontal: 16,
     paddingVertical: 12,
+    borderRadius:20,
   },
   headerTitle: {
     color: '#fff',

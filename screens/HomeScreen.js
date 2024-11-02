@@ -203,7 +203,7 @@ const HomeScreen = () => {
 
     </View> 
     </View>
-    <ProgressBar progress={progress} />
+    <ProgressBar progress={progress} showPercentSign={true} />
         <TouchableOpacity style={styles.spotGroupButton}>
           <Text style={styles.buttonText}>Spot.Group</Text>
         </TouchableOpacity>
@@ -400,6 +400,7 @@ const HomeScreen = () => {
           bankName: {
             fontSize: 16,
             color: '#555',
+            
           },
           sliderImageContainer: {
             width: 270,
@@ -416,6 +417,7 @@ const HomeScreen = () => {
             shadowRadius: 8,
             elevation: 5,               // For Android shadow
             marginRight: 15,
+            marginBottom: 10,
         },
         
         sliderImage: {
@@ -436,6 +438,7 @@ const HomeScreen = () => {
           borderWidth: 2,
           boarderColor: 'black',
           marginBottom: 10,
+          marginTop: 10,
           
 
         }
