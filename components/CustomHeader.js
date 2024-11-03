@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+
 export default function CustomHeader({ title, navigation }) {
   return (
     
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(200,260,240)',
     paddingHorizontal: 16,
     paddingVertical: 12,
-    borderRadius:20,
+    borderRadius:25,
   },
   headerTitle: {
     color: '#fff',

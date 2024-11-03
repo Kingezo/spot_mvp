@@ -10,6 +10,10 @@ import SearchScreen from '../screens/SearchScreen';
 import CustomHeader from '../components/CustomHeader';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { useDispatch, useSelector } from 'react-redux';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../config/firebase';
+import { setUser } from '../redux/slices/user';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -52,23 +56,45 @@ function TabNavigator() {
 }
 
 export default function AppNavigation() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName= 'Welcome' screenOptions={({ navigation, route }) => ({
-          CustomHeader: () => (
-            <CustomHeader title={route.name} navigation={navigation} />
-          ),
-        })}
-      >
-        <Stack.Screen options= {{headerShown: false}}name="Welcome" component={WelcomeScreen} />
-        <Stack.Screen options= {{headerShown: false}}name="SignIn" component={SignInScreen} />
-        <Stack.Screen options= {{headerShown: false}}name="SignUp" component={SignUpScreen} />
-      
-        <Stack.Screen options ={{ headerShown: false }} name="Main" component={TabNavigator} />
+  const {user} = useSelector(state=> state.user);
 
-     
-      </Stack.Navigator>
-      
-    </NavigationContainer>
-  );
+  const dispatch = useDispatch();
+
+  onAuthStateChanged(auth, u=>{
+    console.log('got user: ',u);
+    dispatch(setUser(u));
+  })
+
+  if(user){
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName= 'Main' screenOptions={({ navigation, route }) => ({
+            CustomHeader: () => (
+              <CustomHeader title={route.name} navigation={navigation} />
+            ),
+          })}
+        >
+          <Stack.Screen options ={{ headerShown: false }} name="Main" component={TabNavigator} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+
+  } else {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName= 'Welcome' screenOptions={({ navigation, route }) => ({
+            CustomHeader: () => (
+              <CustomHeader title={route.name} navigation={navigation} />
+            ),
+          })}
+        >
+          <Stack.Screen options= {{headerShown: false}}name="Welcome" component={WelcomeScreen} />
+          <Stack.Screen options= {{headerShown: false}}name="SignIn" component={SignInScreen} />
+          <Stack.Screen options= {{headerShown: false}}name="SignUp" component={SignUpScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+
+  }
+  
 }

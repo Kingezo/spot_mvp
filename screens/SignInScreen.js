@@ -5,22 +5,70 @@ import ScreenWrapper from '../components/screenWrapper';
 import { colors } from '../theme/ColorThemes';
 import Button from '../constants/Button';
 import { useNavigation } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
+import { auth } from '../config/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import Loading from '../components/loading';
+import { setUser } from '../redux/slices/user';
+import { setUserLoading } from '../redux/slices/user';
 
 export default function SignInScreen() {
     const [isPasswordShown, setIsPasswordShown] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const navigation = useNavigation();
+    const {userLoading} = useSelector(state=> state.user);
 
+    const dispatch = useDispatch();
+
+    const handleSubmit = async ()=>{
+        if(email && password){ 
+            // good to go
+            //navigation.navigate('Home');
+            //await signInWithEmailAndPassword(auth, email, password);
+           
+
+             try{
+                dispatch(setUserLoading(true));
+                await signInWithEmailAndPassword(auth, email, password);
+                dispatch(setUserLoading(false))
+            }catch(e){
+                Toast.show({
+                    type: 'custom_error',
+                    text1: 'Error',
+                    text2: 'Invalid email and/or password',
+                    position: 'bottom',
+                });
+
+            }
+                
+
+
+        }else{
+            // show error
+            Toast.show({
+                type: 'custom_error',
+                text1: 'Error',
+                text2: 'Please enter both valid email and password.',
+                position: 'bottom',
+            });
+        }
+        
+    }
     return (
         <ScreenWrapper>
             <View style={{ flex: 1, marginHorizontal: 22 }}>
-                <Text style={{ fontSize: 22, fontWeight: 'bold', marginVertical: 12, color: colors.black }}> Sign In </Text>
-                <Text style={{ fontSize: 16, color: colors.black }}> Welcome Back! </Text>
+                <Text style={{ fontSize: 22, fontWeight: 'bold', marginVertical: 12, color: colors.black }}>Sign In </Text>
+                <Text style={{ fontSize: 16, color: colors.black }}>Welcome Back! </Text>
             </View>
 
             <View style={{ height: 575, marginBottom: 12 }}>
                 <Text style={{ fontSize: 16, fontWeight: 'bold', marginVertical: 8 }}> Email Address</Text>
                 <View style={{ width: "100%", height: 48, borderColor: colors.black, borderWidth: 1, borderRadius: 8, alignItems: "center", justifyContent: "center", paddingLeft: 22 }}>
                     <TextInput
+                        value = {email}
+                        onChangeText={value=> setEmail(value)}
                         placeholder='Enter your email address'
                         placeholderTextColor={colors.black}
                         keyboardType='email-address'
@@ -33,6 +81,8 @@ export default function SignInScreen() {
                 <Text style={{ fontSize: 16, fontWeight: 'bold', marginVertical: 8 }}> Password</Text>
                 <View style={{ width: "100%", height: 48, borderColor: colors.black, borderWidth: 1, borderRadius: 8, alignItems: "center", justifyContent: "center", paddingLeft: 22 }}>
                     <TextInput
+                        value = {password}
+                        onChangeText={value=> setPassword(value)}
                         placeholder='Enter your Password'
                         placeholderTextColor={colors.black}
                         secureTextEntry={!isPasswordShown}
@@ -53,15 +103,23 @@ export default function SignInScreen() {
                     flexDirection: 'row',
                     marginVertical: 6
                 }}>
-                    <Button
+                    {
+                        userLoading? (
+                            <Loading />
+                        ):(
+                            <Button
                         title="Sign In"
                         filled
-                        onPress={() => navigation.navigate("Main")}
+                        onPress={handleSubmit}
                         style={{
                             marginTop: 22,
                             width: "100%",
                         }}
                     />
+
+                        )
+                    }
+                    
                 </View>
 
                 <View style={{ alignItems: 'center', marginVertical: 20 }}>

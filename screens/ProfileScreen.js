@@ -5,6 +5,10 @@ import CustomHeader from '../components/CustomHeader';
 import SlidingUpPanel from 'rn-sliding-up-panel'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ProgressBar from '../components/ProgressBar';
+import { auth } from '../config/firebase';
+import { setUser } from '../redux/slices/user';
+import { logoutUser } from '../redux/thunk';
+import { useDispatch } from 'react-redux';
 
 
 //import { icons } from '../constants'
@@ -12,6 +16,7 @@ import ProgressBar from '../components/ProgressBar';
 import {MaterialIcons} from '@expo/vector-icons'
 import { colors } from '../theme/ColorThemes';
 import { Header } from '@react-navigation/stack';
+import { signOut } from 'firebase/auth';
 //import { ScrollView } from 'react-native-gesture-handler';
 
 const ProfileScreen = () => {
@@ -120,6 +125,12 @@ const ProfileScreen = () => {
        // Progress Bar
    const [progress, setProgress] = useState(progress);
 
+   // Log Out
+   const dispatch = useDispatch();
+   const handleLogout = () => {
+    dispatch(logoutUser());
+  };
+
     
     return (
         
@@ -221,7 +232,7 @@ const ProfileScreen = () => {
             </View>
       </View>
       <View>
-      <Text style={{ color: "black",  fontSize: 12+, alignItems:'center', marginTop: 10, marginBottom: 10}}> Learn more about what Spot can do to improve your score! </Text>
+      <Text style={{ color: "black",  fontSize: 12, alignItems:'center', marginTop: 10, marginBottom: 10}}> Learn more about what Spot can do to improve your score! </Text>
       </View>
       <View style={{flexDirection: 'row',justifyContent: "space-between", alignItems: 'center', paddingHorizontal: '20'}}>
       <TouchableOpacity onPress={() => console.log("Settings pressed")}>
@@ -240,7 +251,14 @@ const ProfileScreen = () => {
         </TouchableOpacity>
 
       </View>
-                <View>
+      <View style={styles.linkedBankCard}>
+        <View style={{marginLeft: 110}}>
+      <TouchableOpacity style={ styles.ButtonBlock} onPress={handleLogout}>
+                <Text style={styles.buttonText}>Log Out</Text>
+      </TouchableOpacity>
+      </View>
+      </View>
+                <View style={{marginTop: 100}}>
                     <Text> Brought to you by Spot.Financial LLC</Text>
                 </View>
             
@@ -488,9 +506,10 @@ const ProfileScreen = () => {
             shadowOpacity: 0.1,
             shadowRadius: 10,
             elevation: 5,
-            marginBottom: 100,
+            marginBottom: 10,
             flexDirection: 'row',
           },
+          
           linkedBankTitle: {
             fontSize: 18,
             color: '#333',
