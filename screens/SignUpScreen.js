@@ -121,7 +121,7 @@ export default function SignUpScreen() {
                             <Loading />
                         ):(
                             <Button
-                        title="Sign In"
+                        title="Sign Up"
                         filled
                         onPress={handleSubmit}
                         style={{
