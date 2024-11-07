@@ -24,9 +24,13 @@ export default function SignUpScreen() {
     const handleSubmit = async ()=>{
         if(email && password == confirmedPassword){ 
             try{
-                dispatch(setUserLoading(true));
-                await createUserWithEmailAndPassword(auth, email, password);
-                dispatch(setUserLoading(false))
+                //dispatch(setUserLoading(true));
+                //await createUserWithEmailAndPassword(auth, email, password);
+                //dispatch(setUserLoading(false))
+                navigation.navigate('PersonalInfo', { email, password });
+                 // Navigate to PersonalInfoScreen after successful sign up
+                 //navigation.navigate('PersonalInfo');
+
             }catch(e){
                 Toast.show({
                     type: 'custom_error',

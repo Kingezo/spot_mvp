@@ -8,6 +8,7 @@ import SignUpScreen from '../screens/SignUpScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import SearchScreen from '../screens/SearchScreen';
 import CustomHeader from '../components/CustomHeader';
+import PersonalInfoScreen from '../screens/PersonalInfoScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useDispatch, useSelector } from 'react-redux';
@@ -91,6 +92,7 @@ export default function AppNavigation() {
           <Stack.Screen options= {{headerShown: false}}name="Welcome" component={WelcomeScreen} />
           <Stack.Screen options= {{headerShown: false}}name="SignIn" component={SignInScreen} />
           <Stack.Screen options= {{headerShown: false}}name="SignUp" component={SignUpScreen} />
+          <Stack.Screen options= {{headerShown: false}}name="PersonalInfo" component={PersonalInfoScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     );
