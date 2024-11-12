@@ -3,12 +3,23 @@ import React, {useState, useRef } from 'react'
 import ScreenWrapper from '../components/screenWrapper';
 import ProgressBar from '../components/ProgressBar';
 import SlidingUpPanel from 'rn-sliding-up-panel'
+import { useSelector } from 'react-redux';
 //import Carousel from 'react-native-snap-carousel'
 //import { icons } from '../constants'
 
 import {MaterialIcons} from '@expo/vector-icons'
+import user from '../redux/slices/user';
 
-const HomeScreen = () => {
+export default function HomeScreen({route,}) {
+   // Access the firstName and lastName from Redux state
+   //const firstName = useSelector(state => state.user.firstName);
+   //const lastName = useSelector(state => state.user.lastName);
+   //const { firstName, lastName } = useSelector((state) => state.user);
+   const { firstName, lastName, email} = route.params || { firstName: user.firstName , lastName: '1', email: ' test' };
+   //const email = useSelector((state) => state.user.email);
+   //console.log('From Redux:', firstName, lastName);
+   //const user = userCredential.user;
+   
 
     //Users Data
     const Users = [
@@ -147,8 +158,8 @@ const HomeScreen = () => {
 
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                     <View>
-                        <Text style= {{fontSize:26, color: 'black' }}>Welcome Back,</Text>
-                        <Text style= {{fontSize:26, opacity: 0.6, color:'black'}}>Gnoulelein Tako</Text>
+                        <Text style= {{fontSize:26, color: 'black' }}>Welcome Back!</Text>
+                        <Text style= {{fontSize:26, opacity: 0.6, color:'black'}}>{email}</Text>
                         </View>
                         <View>
                         <Image 
@@ -191,7 +202,7 @@ const HomeScreen = () => {
       {/* Cash Balance Card */}
       <View style={styles.balanceCard}>
         <Text style={styles.balanceTitle}>Current Pool</Text>
-        <Text style = {{fontWeight: 'bold'}}>Payment Recieve Date, Nov 7th </Text>
+        <Text style = {{fontWeight: 'bold'}}>Payment Recieve Date, Nov 7th  </Text>
 
         <View style = {{flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', paddingHorizontal: '20'}}>
         <Text style={styles.balanceAmount}>${balance.toFixed(2)}</Text>
@@ -445,4 +456,4 @@ const HomeScreen = () => {
         
     })
 //}
-export default HomeScreen
+//export default HomeScreen

@@ -11,6 +11,8 @@ import { auth } from '../config/firebase';
 import { setUserLoading } from '../redux/slices/user';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../components/loading';
+import { setUserInfo } from '../redux/slices/user';
+//import { updateUser } from '../redux/userSlice';
 
 export default function PersonalInfoScreen({route,}) {
 
@@ -19,24 +21,33 @@ export default function PersonalInfoScreen({route,}) {
     const navigation = useNavigation();
     const {userLoading} = useSelector(state=> state.user);
     const dispatch = useDispatch();
+    const { email, password } = route.params || { email: '', password: '' }; // Default to empty strings if not found, is currently not working
 
     const handleSubmit = async () => {
-        const { email, password } = route.params || { email: '', password: '' }; // Default to empty strings if not found
+        
+        console.log('From Redux:', email, password);
         if (firstName && lastName) {
             try {
                 dispatch(setUserLoading(true));
 
                 // Create user with email and password
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password); // is currently the only parameter that is working
                 const user = userCredential.user;
 
                 // Update user profile with first and last name
                 await user.updateProfile({
                     displayName: `${firstName} ${lastName}`,
                 });
+                // Reload user to make sure the display name is updated
+                await user.reload();
+
+                console.log('Updated Display Name:', user.displayName); // Log display name after setting
+                await dispatch(setUserInfo({ firstName, lastName, email}));
+                console.log('First name:', firstName, 'Last name:', lastName);
+                //dispatch(updateUser({ firstName, lastName }));
 
                 dispatch(setUserLoading(false));
-                navigation.navigate('Home'); // Navigate to home or profile screen
+                navigation.navigate('Home', { firstName, lastName, email }); // Navigate to home or profile screen
             } catch (e) {
                 dispatch(setUserLoading(false));
                 console.error("Error creating user: ", e); // Log the actual error for debugging
@@ -61,7 +72,7 @@ export default function PersonalInfoScreen({route,}) {
     return (
         <ScreenWrapper>
             <View style={{ flex: 1, marginHorizontal: 22 }}>
-                <Text style={{ fontSize: 22, fontWeight: 'bold', marginVertical: 12, color: colors.black }}>Create Account </Text>
+                <Text style={{ fontSize: 22, fontWeight: 'bold', marginVertical: 12, color: colors.black }}>{email}</Text>
                 <Text style={{ fontSize: 16, color: colors.black }}>Save money and build credit today!</Text>
             </View>
 
