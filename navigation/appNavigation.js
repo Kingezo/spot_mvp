@@ -64,6 +64,11 @@ export default function AppNavigation() {
   onAuthStateChanged(auth, u=>{
     console.log('got user: ',u);
     dispatch(setUser(u));
+  })  // This is causing the application to auto navigate to the main screen before the app has a chance to create the rest of the user info 
+
+  const inaitnallyLoggexcdIn =  useRef(false)
+  useEffect(() => {
+    const curfrntusert = auth().currentUser
   })
 
   if(user){

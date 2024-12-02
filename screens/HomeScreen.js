@@ -1,12 +1,14 @@
 import { View, Text, StyleSheet, Image, Dimensions, TouchableWithoutFeedback, TouchableOpacity, Animated, FlatList, Button, ScrollView } from 'react-native'
-import React, {useState, useRef } from 'react'
+import React, {useState, useRef, useEffect } from 'react'
 import ScreenWrapper from '../components/screenWrapper';
 import ProgressBar from '../components/ProgressBar';
 import SlidingUpPanel from 'rn-sliding-up-panel'
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 //import Carousel from 'react-native-snap-carousel'
 //import { icons } from '../constants'
 
+import UserList from '../components/user-list';
 import {MaterialIcons} from '@expo/vector-icons'
 import user from '../redux/slices/user';
 
@@ -16,9 +18,34 @@ export default function HomeScreen({route,}) {
    //const lastName = useSelector(state => state.user.lastName);
    //const { firstName, lastName } = useSelector((state) => state.user);
    const { firstName, lastName, email} = route.params || { firstName: user.firstName , lastName: '1', email: ' test' };
+   const [data, setData] = useState([]);
    //const email = useSelector((state) => state.user.email);
    //console.log('From Redux:', firstName, lastName);
    //const user = userCredential.user;
+   /*
+   useEffect(() => {
+    axios.get('http://127.0.0.1:8000/users/hello')
+      .then(response => {
+        setMessage(response.data.message);
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+  */
+  // User Info
+  
+  useEffect(() => {
+    fetchData()
+
+    }, []);
+    
+    const fetchData = async() => {
+      const response = await fetch('http://127.0.0.1:8000/users/hello')
+      const data = await response.json()
+      setData(data)
+    }
+  
    
 
     //Users Data
@@ -159,7 +186,8 @@ export default function HomeScreen({route,}) {
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                     <View>
                         <Text style= {{fontSize:26, color: 'black' }}>Welcome Back!</Text>
-                        <Text style= {{fontSize:26, opacity: 0.6, color:'black'}}>{email}</Text>
+                        <Text style= {{fontSize:26, color: 'black' }}>{email}{firstName}</Text>
+                        
                         </View>
                         <View>
                         <Image 
@@ -233,6 +261,9 @@ export default function HomeScreen({route,}) {
       <View style={styles.linkedBankCard}>
         <Text style={styles.linkedBankTitle}>Spot.Deals</Text>
         <Text style={styles.bankName}>Check out special deals from retailers near you that you can save for!</Text>
+      </View>
+      <View>
+      <UserList data={data} />
       </View>
     </View>
     <FlatList

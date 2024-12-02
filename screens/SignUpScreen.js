@@ -27,8 +27,8 @@ export default function SignUpScreen() {
                 //dispatch(setUserLoading(true));
                 //await createUserWithEmailAndPassword(auth, email, password);
                 //dispatch(setUserLoading(false))
-                navigation.navigate('PersonalInfo', { email, password });
                 console.log('From Redux:', email, password);
+                navigation.navigate('PersonalInfo', { email, password });
                  // Navigate to PersonalInfoScreen after successful sign up
                  //navigation.navigate('PersonalInfo');
 
