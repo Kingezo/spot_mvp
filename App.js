@@ -4,7 +4,10 @@ import AppNavigation from './navigation/appNavigation';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import Toast from 'react-native-toast-message';
+import { LogBox } from 'react-native';
 
+
+LogBox.ignoreLogs(["Firebase Analytics is not supported"]);
 
 // Step 1: Custom toast configuration
 const toastConfig = {

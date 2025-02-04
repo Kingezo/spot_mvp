@@ -11,7 +11,8 @@ import { auth } from '../config/firebase';
 import { setUserLoading } from '../redux/slices/user';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../components/loading';
-import { setUserInfo } from '../redux/slices/user';
+import { setUserInfo, updateUser } from '../redux/slices/user';
+import { updateProfile } from "firebase/auth";
 //import { updateUser } from '../redux/userSlice';
 
 export default function PersonalInfoScreen({route,}) {
@@ -34,20 +35,20 @@ export default function PersonalInfoScreen({route,}) {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password); // is currently the only parameter that is working
                 const user = userCredential.user;
 
-                // Update user profile with first and last name
-                await user.updateProfile({
-                    displayName: `${firstName} ${lastName}`,
-                });
+               
+
                 // Reload user to make sure the display name is updated
                 await user.reload();
 
                 console.log('Updated Display Name:', user.displayName); // Log display name after setting
-                await dispatch(setUserInfo({ firstName, lastName, email}));
+
+                dispatch(updateUser({ firstName, lastName, email}));
+
                 console.log('First name:', firstName, 'Last name:', lastName);
-                //dispatch(updateUser({ firstName, lastName }));
+                
 
                 dispatch(setUserLoading(false));
-                navigation.navigate('Home', { firstName, lastName, email }); // Navigate to home or profile screen
+                navigation.navigate('Home',); // Navigate to home or profile screen
             } catch (e) {
                 dispatch(setUserLoading(false));
                 console.error("Error creating user: ", e); // Log the actual error for debugging

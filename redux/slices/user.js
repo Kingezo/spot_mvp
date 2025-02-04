@@ -4,9 +4,6 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   user: null,
   userLoading: false,
-  firstName: '',
-  lastName: '',
-  email: '', // Add email here
 };
 
 const serializableUser = (userData) => {
@@ -34,6 +31,12 @@ export const userSlice = createSlice({
     setUserLoading: (state, action) => {
       state.userLoading = action.payload;
     },
+    updateUser: (state, action) => {
+      if (state.user) {
+        state.user = { ...state.user, ...action.payload};
+      }
+
+    },
     clearUser: (state) => {
       state.user = null;
       state.firstName = '';
@@ -43,6 +46,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUser, setUserInfo, setUserLoading, clearUser, } = userSlice.actions;
+export const { setUser, setUserInfo, setUserLoading, clearUser, updateUser } = userSlice.actions;
 
 export default userSlice.reducer;

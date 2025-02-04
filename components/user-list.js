@@ -1,4 +1,4 @@
-import { Text , View, FlatList, RefreshControl } from 'react-native'
+import { Text , View, RefreshControl, ScrollView} from 'react-native'
 import UserItem from './user-item'
 
 const UserList = ({data}) => {
@@ -8,17 +8,22 @@ const UserList = ({data}) => {
     }
     return (
         <View>
-            <FlatList
-            data = {data}
-            keyExtractor={item=> item.id}
-            renderItem={renderItem}
-            refreshControl={
-                <RefreshControl
-                refreshing={false}
-                onRefresh={()=> console.log('refreshing...')}
-                />
-            }
-            />
+           <ScrollView
+  showsVerticalScrollIndicator={false}
+  refreshControl={
+    <RefreshControl
+      refreshing={false}
+      onRefresh={() => console.log('refreshing...')}
+    />
+  }
+>
+  <View>
+    {data.map((item) => (
+      <View key={item.id}>{renderItem({ item })}</View>
+    ))}
+  </View>
+</ScrollView>
+
 
             
         </View>

@@ -1,12 +1,11 @@
-import { View, Text, StyleSheet, Image, Dimensions, TouchableWithoutFeedback, TouchableOpacity, Animated, FlatList, Button, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, Image, Dimensions, TouchableWithoutFeedback, TouchableOpacity, Animated, Button, ScrollView } from 'react-native'
 import React, {useState, useRef, useEffect } from 'react'
 import ScreenWrapper from '../components/screenWrapper';
 import ProgressBar from '../components/ProgressBar';
 import SlidingUpPanel from 'rn-sliding-up-panel'
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-//import Carousel from 'react-native-snap-carousel'
-//import { icons } from '../constants'
+
 
 import UserList from '../components/user-list';
 import {MaterialIcons} from '@expo/vector-icons'
@@ -17,7 +16,7 @@ export default function HomeScreen({route,}) {
    //const firstName = useSelector(state => state.user.firstName);
    //const lastName = useSelector(state => state.user.lastName);
    //const { firstName, lastName } = useSelector((state) => state.user);
-   const { firstName, lastName, email} = route.params || { firstName: user.firstName , lastName: '1', email: ' test' };
+   const user = useSelector(state => state.user.user);  // Get user from Redux
    const [data, setData] = useState([]);
    //const email = useSelector((state) => state.user.email);
    //console.log('From Redux:', firstName, lastName);
@@ -186,7 +185,7 @@ export default function HomeScreen({route,}) {
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                     <View>
                         <Text style= {{fontSize:26, color: 'black' }}>Welcome Back!</Text>
-                        <Text style= {{fontSize:26, color: 'black' }}>{email}{firstName}</Text>
+                        <Text style= {{fontSize:26, color: 'black' }}>{user.firstName} {user.lastName}</Text>
                         
                         </View>
                         <View>
@@ -210,19 +209,17 @@ export default function HomeScreen({route,}) {
                             </View>
                             <Text style={{color: 'black'}}>Add Friends</Text>
                         </TouchableOpacity>
-                        <FlatList
-                        horizontal
-                        data={Users}
-                        keyExtractor={item => item.key}
-                        renderItem={({item}) => {
-                            return(
-                                <View style={styles.AddUser}>
-                                    <Image style={styles.AddUserIconbg} source={{uri: item.userImage}}/>
-                                    <Text style={{color: 'black'}}> {item.userName}</Text>
-                                </View>
-                            )
-                        }}
-                        />
+                        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+  <View style={{ flexDirection: 'row' }}>
+    {Users.map((item) => (
+      <View key={item.key} style={styles.AddUser}>
+        <Image style={styles.AddUserIconbg} source={{ uri: item.userImage }} />
+        <Text style={{ color: 'black' }}>{item.userName}</Text>
+      </View>
+    ))}
+  </View>
+</ScrollView>
+
                     </View>
                 </View>
             </View>
@@ -266,19 +263,18 @@ export default function HomeScreen({route,}) {
       <UserList data={data} />
       </View>
     </View>
-    <FlatList
-                        horizontal
-                        data={Deals}
-                        keyExtractor={item => item.key}
-                        renderItem={({item,index}) => {
-                            return(
-                              <TouchableOpacity style={styles.sliderImageContainer}>
-                                     <Image style={styles.sliderImage} source={item.dealImage} resizeMode="cover" />
-                                    <Text style={{color: 'black'}}> {item.dealName}</Text>
-                                </TouchableOpacity>
-                            )
-                        }}
-                        />
+    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+  <View style={{ flexDirection: 'row' }}>
+    {Deals.map((item) => (
+      <TouchableOpacity key={item.key} style={styles.sliderImageContainer}>
+        <Image style={styles.sliderImage} source={item.dealImage} resizeMode="cover" />
+        <Text style={{ color: 'black' }}>{item.dealName}</Text>
+      </TouchableOpacity>
+    ))}
+  </View>
+</ScrollView>
+
+
     
     
 

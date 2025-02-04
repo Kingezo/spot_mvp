@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, Dimensions, TouchableWithoutFeedback, TouchableOpacity, Animated, FlatList, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, Image, Dimensions, TouchableWithoutFeedback, TouchableOpacity, Animated, ScrollView } from 'react-native'
 import React, {useState, useRef } from 'react'
 import ScreenWrapper from '../components/screenWrapper';
 import CustomHeader from '../components/CustomHeader';
@@ -6,7 +6,7 @@ import SlidingUpPanel from 'rn-sliding-up-panel'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ProgressBar from '../components/ProgressBar';
 import { auth } from '../config/firebase';
-import { setUser } from '../redux/slices/user';
+import { setUser} from '../redux/slices/user';
 import { logoutUser } from '../redux/thunk';
 import { useDispatch } from 'react-redux';
 
@@ -127,9 +127,15 @@ const ProfileScreen = () => {
 
    // Log Out
    const dispatch = useDispatch();
-   const handleLogout = () => {
-    dispatch(logoutUser());
-  };
+   const handleLogout = async () => {
+    try {
+        await signOut(auth);  // Firebase function to log out user
+        dispatch(setUser(null));  // Clear user state in Redux
+        console.log("User logged out successfully");
+    } catch (error) {
+        console.error("Logout Error:", error);
+    }
+};
 
     
     return (
@@ -196,19 +202,18 @@ const ProfileScreen = () => {
                             </View>
                             <Text style={{color: 'black'}}>Add Bank</Text>
                         </TouchableOpacity>
-                        <FlatList
-                        horizontal
-                        data={Banks}
-                        keyExtractor={item => item.key}
-                        renderItem={({item}) => {
-                            return(
-                                <View style={styles.AddUser}>
-                                    <Image style={styles.AddBankIconBg} source={item.bankImage}/>
-                                    <Text style={{color: 'black'}}> {item.bankName}</Text>
-                                </View>
-                            )
-                        }}
-                        />
+                        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+  <View style={{ flexDirection: 'row' }}>
+    {Banks.map((item) => (
+      <View key={item.key} style={styles.AddUser}>
+        <Image style={styles.AddBankIconBg} source={item.bankImage} />
+        <Text style={{ color: 'black' }}>{item.bankName}</Text>
+      </View>
+    ))}
+  </View>
+</ScrollView>
+
+                        
                     </View>
                 </View>
            
@@ -282,34 +287,34 @@ const ProfileScreen = () => {
                             </View>
 
                             <View style={{height: 500, paddingBottom: 10}}>
-                                <FlatList
-                                data={Users}
-                                keyExtractor={ item => item.key}
-                                renderItem={({item}) => {
-                                    return(
-                                        <View style={styles.PanelItemContainer}>
-                                            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                            <View style={{marginRight: 10}}>
-                                                <Image source={{uri: item.userImage}} style={styles.PanelImage} />
-                                            </View>
-                                            <View>
-                                                <Text style={{fontSize: 14, color: '#F0FFF0000'}}>{item.userName}</Text>
-                                                <Text style={{fontSize: 14, color: '#F0FFF0000'}}>{item.transactionDate}</Text>
-                                                </View>
-                                </View>
-                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                <Text style={{fontSize: 16, color: '#F0FFF0000', marginHorizontal: 2}}>{item.amount}</Text>
+                            <ScrollView showsVerticalScrollIndicator={false}>
+  <View>
+    {Users.map((item) => (
+      <View key={item.key} style={styles.PanelItemContainer}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{ marginRight: 10 }}>
+            <Image source={{ uri: item.userImage }} style={styles.PanelImage} />
+          </View>
+          <View>
+            <Text style={{ fontSize: 14, color: '#F0FFF0000' }}>{item.userName}</Text>
+            <Text style={{ fontSize: 14, color: '#F0FFF0000' }}>{item.transactionDate}</Text>
+          </View>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={{ fontSize: 16, color: '#F0FFF0000', marginHorizontal: 2 }}>
+            {String(item.amount)}
+          </Text>
+          {item.credit ? (
+            <MaterialIcons name="arrow-drop-up" size={22} color="green" />
+          ) : (
+            <MaterialIcons name="arrow-drop-down" size={22} color="#ff3838" />
+          )}
+        </View>
+      </View>
+    ))}
+  </View>
+</ScrollView>
 
-                                {item.credit ? (
-                                    <MaterialIcons name='arrow-drop-up' size={22} color='green' />
-                                ) : (
-                                    <MaterialIcons name='arrow-drop-down' size={22} color='#ff3838' />
-                                )}
-                                </View>
-                            </View>
-                        )
-                        }}
-                        />
                     </View>
                     <View style={{flexDirection: 'row', justifyContent:'flex-end'}}>
                         <TouchableOpacity style={styles.PanelButton}>

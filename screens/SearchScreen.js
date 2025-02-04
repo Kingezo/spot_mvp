@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput,StyleSheet, TouchableOpacity } from 'react-native';
 import ScreenWrapper from '../components/screenWrapper';
 
 const SearchScreen = () => {
@@ -48,11 +48,14 @@ const SearchScreen = () => {
       />
 
       {searchResults.length > 0 ? (
-        <FlatList
-          data={searchResults}
-          keyExtractor={(item) => item.id}
-          renderItem={renderItem}
-        />
+        <ScrollView showsVerticalScrollIndicator={false}>
+        <View>
+          {searchResults.map((item) => (
+            <View key={item.id}>{renderItem({ item })}</View> 
+          ))}
+        </View>
+      </ScrollView>
+      
       ) : (
         <Text style={styles.placeholder}>Search for someone to start a group with!</Text>
       )}

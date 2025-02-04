@@ -13,7 +13,7 @@ const firebaseConfig = {
   storageBucket: "spot-financial.firebasestorage.app",
   messagingSenderId: "970733336355",
   appId: "1:970733336355:web:4170abaf0a6c8a9e01fe96",
-  measurementId: "G-BVFRBMFQ7C"
+  // measurementId: "G-BVFRBMFQ7C"
 };
 
 // Initialize Firebase
