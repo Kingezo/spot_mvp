@@ -125,6 +125,12 @@ const ProfileScreen = () => {
        // Progress Bar
    const [progress, setProgress] = useState(progress);
 
+   //open contacts
+   const openContacts = () => {
+     Linking.openURL('content://contacts')
+       .catch(err => console.error("Error opening contacts", err));
+   };
+
    // Log Out
    const dispatch = useDispatch();
    const handleLogout = async () => {
@@ -251,7 +257,7 @@ const ProfileScreen = () => {
                 </View>
                 <View style={styles.linkedBankCard}>
         <Text style={styles.bankName}>      Earn up to $50 when you</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={openContacts}>
             <Text style={{fontSize: 16, color: 'green',}}> Spot friends!</Text>
         </TouchableOpacity>
 

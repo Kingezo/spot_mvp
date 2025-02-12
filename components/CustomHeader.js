@@ -1,22 +1,39 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useSelector } from 'react-redux';
 
 
 export default function CustomHeader({ title, navigation }) {
+  console.log("User from Redux:", user);
+  const user = useSelector(state => state.user.user);  // Get user from Redux
+  const [data, setData] = useState([]);
+  // profile picture
+ const getInitials = (firstName, lastName) => {
+  if (!firstName || !lastName) return "U"; // Default to "U" if name is missing
+  return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+};
   return (
     
         <View style={styles.headerContainer}>
            
             <View style={styles.userInfoWrapper}>
-            <Image 
-                source={require('../assets/images/Gnoulelein.jpg')}
-                style={styles.ProfileImage}
-            />
+                                    {user && user.firstName && user.lastName ? (
+                // ✅ Render Initials if First & Last Name Exist
+                <View style={styles.profileCircle}>
+                  <Text style={styles.profileText}>
+                    {getInitials(user.firstName, user.lastName)}
+                  </Text>
+                </View>
+              ) : (
+                // ✅ Fallback if User Info is Missing
+                <View style={styles.profileCircle}>
+                  <Text style={styles.profileText}>U</Text>
+                </View>
+              )}
             <View style = {{marginLeft: 10}}>
-            <Text style={{color: "black", fontSize: 16}}> Gnoulelein Tako </Text>
-            <Text style={{color: "black", fontSize: 12, opacity: 0.6}}> .GTako0 </Text>
+            <Text style={{color: "black", fontSize: 16}}>{user.firstName} {user.lastName}</Text>
             </View>
             </View>
 
@@ -53,5 +70,24 @@ const styles = StyleSheet.create({
  userInfoWrapper: {
     flexDirection: 'row', 
     alignItems: 'center'
- }
+ },
+ profileCircle: {
+  width: 55,
+  height: 55,
+  borderRadius: 40,
+  backgroundColor: "rgb(50,300,210)",  // Spot Green background
+  justifyContent: "center",
+  alignItems: "center",
+  elevation: 3, // Shadow effect for Android
+  shadowColor: "#000", // Shadow effect for iOS
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.3,
+  shadowRadius: 4,
+},
+
+profileText: {
+  fontSize: 20,
+  fontWeight: "bold",
+  color: "white",
+},
 });

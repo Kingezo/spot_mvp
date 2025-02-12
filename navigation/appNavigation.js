@@ -93,7 +93,7 @@ export default function AppNavigation() {
       <Stack.Navigator 
         initialRouteName={user ? 'Main' : 'Welcome'}
         screenOptions={({ navigation, route }) => ({
-          CustomHeader: () => <CustomHeader title={route.name} navigation={navigation} />,
+          header: () => <CustomHeader title={route.name} navigation={navigation} />,
         })}
       >
         {user ? (

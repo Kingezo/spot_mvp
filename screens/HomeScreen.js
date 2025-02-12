@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, Dimensions, TouchableWithoutFeedback, TouchableOpacity, Animated, Button, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, Image, Dimensions, TouchableWithoutFeedback, TouchableOpacity, Animated, Button, ScrollView, Linking } from 'react-native'
 import React, {useState, useRef, useEffect } from 'react'
 import ScreenWrapper from '../components/screenWrapper';
 import ProgressBar from '../components/ProgressBar';
@@ -13,14 +13,9 @@ import user from '../redux/slices/user';
 
 export default function HomeScreen({route,}) {
    // Access the firstName and lastName from Redux state
-   //const firstName = useSelector(state => state.user.firstName);
-   //const lastName = useSelector(state => state.user.lastName);
-   //const { firstName, lastName } = useSelector((state) => state.user);
+
    const user = useSelector(state => state.user.user);  // Get user from Redux
    const [data, setData] = useState([]);
-   //const email = useSelector((state) => state.user.email);
-   //console.log('From Redux:', firstName, lastName);
-   //const user = userCredential.user;
    /*
    useEffect(() => {
     axios.get('http://127.0.0.1:8000/users/hello')
@@ -160,18 +155,32 @@ export default function HomeScreen({route,}) {
         key: '1',
         dealImage: require('../assets/images/benz-of-white-plains.png'),
         dealName: 'Mercedes, save 5% on your next car!',
+        url: 'https://www.mbmanhattan.com/'
     },
     {
     key: '2',
     dealImage: require('../assets/images/best-buy-logo.jpeg'),
     dealName: 'BestBuy, up to 10% on TVs!',
+    url: 'https://www.bestbuy.com'
 },
 {
   key: '3',
   dealImage: require('../assets/images/mattress-firm-logo.png'),
   dealName: 'MattressFirm, 15% on mattresses!',
+  url: 'https://www.mattressfirm.com'
 }
 ]
+
+//open contacts
+const openContacts = () => {
+  Linking.openURL('content://contacts')
+    .catch(err => console.error("Error opening contacts", err));
+};
+ // profile picture
+ const getInitials = (firstName, lastName) => {
+  if (!firstName || !lastName) return "U"; // Default to "U" if name is missing
+  return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+};
 
 
 
@@ -184,16 +193,32 @@ export default function HomeScreen({route,}) {
 
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                     <View>
-                        <Text style= {{fontSize:26, color: 'black' }}>Welcome Back!</Text>
-                        <Text style= {{fontSize:26, color: 'black' }}>{user.firstName} {user.lastName}</Text>
+                        <Text style= {{fontSize:26, color: 'black' }}>Welcome!</Text>
+                        {user ? (
+                          <>
+                          <Text style= {{fontSize:26, color: 'black' }}>
+                            {user.firstName} {user.lastName}
+                            </Text>
+                          </>
+                        ):(
+                          <Text style= {{fontSize:26, color: 'black' }}>Logged in as: {user.email}</Text>
+                        )}
                         
                         </View>
                         <View>
-                        <Image 
-                         source={require('../assets/images/Gnoulelein.jpg')}
-                         style={styles.ProfileImage}
-                        />
-                    <View style={styles.ProfileImageNotification}></View>
+                        {user && user.firstName && user.lastName ? (
+    // ✅ Render Initials if First & Last Name Exist
+    <View style={styles.profileCircle}>
+      <Text style={styles.profileText}>
+        {getInitials(user.firstName, user.lastName)}
+      </Text>
+    </View>
+  ) : (
+    // ✅ Fallback if User Info is Missing
+    <View style={styles.profileCircle}>
+      <Text style={styles.profileText}>U</Text>
+    </View>
+  )}
                     </View>
                 </View>
                 <View>
@@ -203,7 +228,7 @@ export default function HomeScreen({route,}) {
                 <View>
                     <Text style={{ opacity:0.6, marginBottom:10}} >Invite To Group </Text>
                     <View style={{flexDirection: 'row'}}>
-                        <TouchableOpacity style={styles.AddUser}>
+                        <TouchableOpacity style={styles.AddUser} onPress={openContacts}>
                             <View style={styles.AddUserIconbg}>
                             <MaterialIcons name = 'add' color = 'black' size ={28} style = {{alignSelf: 'center'}} />
                             </View>
@@ -266,7 +291,7 @@ export default function HomeScreen({route,}) {
     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
   <View style={{ flexDirection: 'row' }}>
     {Deals.map((item) => (
-      <TouchableOpacity key={item.key} style={styles.sliderImageContainer}>
+      <TouchableOpacity key={item.key} style={styles.sliderImageContainer} onPress={() => Linking.openURL(item.url)}>
         <Image style={styles.sliderImage} source={item.dealImage} resizeMode="cover" />
         <Text style={{ color: 'black' }}>{item.dealName}</Text>
       </TouchableOpacity>
@@ -477,9 +502,28 @@ export default function HomeScreen({route,}) {
           boarderColor: 'black',
           marginBottom: 10,
           marginTop: 10,
-          
-
-        }
+        },
+        profileCircle: {
+          width: 55,
+          height: 55,
+          borderRadius: 40,
+          backgroundColor: "rgb(50,300,210)",  // Spot Green background
+          justifyContent: "center",
+          alignItems: "center",
+          elevation: 3, // Shadow effect for Android
+          shadowColor: "#000", // Shadow effect for iOS
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.3,
+          shadowRadius: 4,
+        },
+        
+        profileText: {
+          fontSize: 20,
+          fontWeight: "bold",
+          color: "white",
+        },
+        
+        
         
     })
 //}

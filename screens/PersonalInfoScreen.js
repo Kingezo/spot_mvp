@@ -35,6 +35,13 @@ export default function PersonalInfoScreen({route,}) {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password); // is currently the only parameter that is working
                 const user = userCredential.user;
 
+                  // ✅ Update Firebase Auth profile with first & last name
+            await updateProfile(user, {
+                displayName: `${firstName} ${lastName}`,
+            });
+
+            console.log('Updated Display Name:', user.displayName);
+
                
 
                 // Reload user to make sure the display name is updated
