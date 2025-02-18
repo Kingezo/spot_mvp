@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 
 
 export default function CustomHeader({ title, navigation }) {
-  console.log("User from Redux:", user);
   const user = useSelector(state => state.user.user);  // Get user from Redux
   const [data, setData] = useState([]);
   // profile picture

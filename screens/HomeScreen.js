@@ -5,6 +5,7 @@ import ProgressBar from '../components/ProgressBar';
 import SlidingUpPanel from 'rn-sliding-up-panel'
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 
 import UserList from '../components/user-list';
@@ -13,7 +14,7 @@ import user from '../redux/slices/user';
 
 export default function HomeScreen({route,}) {
    // Access the firstName and lastName from Redux state
-
+   const navigation = useNavigation();
    const user = useSelector(state => state.user.user);  // Get user from Redux
    const [data, setData] = useState([]);
    /*
@@ -27,18 +28,7 @@ export default function HomeScreen({route,}) {
       });
   }, []);
   */
-  // User Info
   
-  useEffect(() => {
-    fetchData()
-
-    }, []);
-    
-    const fetchData = async() => {
-      const response = await fetch('http://127.0.0.1:8000/users/hello')
-      const data = await response.json()
-      setData(data)
-    }
   
    
 
@@ -265,7 +255,8 @@ const openContacts = () => {
     </View> 
     </View>
     <ProgressBar progress={progress} showPercentSign={true} />
-        <TouchableOpacity style={styles.spotGroupButton}>
+        <TouchableOpacity style={styles.spotGroupButton}
+        onPress={() => navigation.navigate('GroupScreen')}>
           <Text style={styles.buttonText}>Spot.Group</Text>
         </TouchableOpacity>
       </View>
@@ -274,7 +265,8 @@ const openContacts = () => {
         <Text style={styles.linkedBankTitle}>Spot.Credit</Text>
         <Text style={styles.bankName}>Build your credit with Spot.Financial</Text>
         <Image style={styles.creditImage} source={require('../assets/images/credit-cartoon.jpg')} />
-        <TouchableOpacity style={styles.spotGroupButton}>
+        <TouchableOpacity style={styles.spotGroupButton}
+        onPress={() => Linking.openURL('https://forms.gle/YL71yHLpQz3n1DJR9')}>
           <Text style={styles.buttonText}>Get Started</Text>
         </TouchableOpacity>
       </View>

@@ -8,7 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { auth } from '../config/firebase';
 import { setUser } from '../redux/slices/user';
-
+import GroupScreen from '../screens/GroupScreen';
 import HomeScreen from '../screens/HomeScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import SignInScreen from '../screens/SignInScreen';
@@ -91,22 +91,31 @@ export default function AppNavigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName={user ? 'Main' : 'Welcome'}
-        screenOptions={({ navigation, route }) => ({
-          header: () => <CustomHeader title={route.name} navigation={navigation} />,
-        })}
-      >
-        {user ? (
-          <Stack.Screen options={{ headerShown: false }} name="Main" component={TabNavigator} />
-        ) : (
-          <>
-            <Stack.Screen options={{ headerShown: false }} name="Welcome" component={WelcomeScreen} />
-            <Stack.Screen options={{ headerShown: false }} name="SignIn" component={SignInScreen} />
-            <Stack.Screen options={{ headerShown: false }} name="SignUp" component={SignUpScreen} />
-            <Stack.Screen options={{ headerShown: false }} name="PersonalInfo" component={PersonalInfoScreen} />
-          </>
-        )}
-      </Stack.Navigator>
+  initialRouteName={user ? 'Main' : 'Welcome'}
+  screenOptions={({ navigation, route }) => ({
+    header: () => <CustomHeader title={route.name} navigation={navigation} />,
+  })}
+>
+  {user ? (
+    <>
+      <Stack.Screen options={{ headerShown: false }} name="Main" component={TabNavigator} />
+      
+      {/* ✅ GroupScreen is here but NOT in tabs */}
+      <Stack.Screen 
+        name="GroupScreen" 
+        component={GroupScreen} 
+        options={{ title: 'Group Details' }} 
+      /> 
+    </>
+  ) : (
+    <>
+      <Stack.Screen options={{ headerShown: false }} name="Welcome" component={WelcomeScreen} />
+      <Stack.Screen options={{ headerShown: false }} name="SignIn" component={SignInScreen} />
+      <Stack.Screen options={{ headerShown: false }} name="SignUp" component={SignUpScreen} />
+      <Stack.Screen options={{ headerShown: false }} name="PersonalInfo" component={PersonalInfoScreen} />
+    </>
+  )}
+</Stack.Navigator>
     </NavigationContainer>
   );
 }

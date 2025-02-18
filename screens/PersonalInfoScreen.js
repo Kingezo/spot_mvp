@@ -13,12 +13,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../components/loading';
 import { setUserInfo, updateUser } from '../redux/slices/user';
 import { updateProfile } from "firebase/auth";
+import axios from 'axios';
 //import { updateUser } from '../redux/userSlice';
 
 export default function PersonalInfoScreen({route,}) {
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const navigation = useNavigation();
     const {userLoading} = useSelector(state=> state.user);
     const dispatch = useDispatch();
@@ -27,7 +29,7 @@ export default function PersonalInfoScreen({route,}) {
     const handleSubmit = async () => {
         
         console.log('From Redux:', email, password);
-        if (firstName && lastName) {
+        if (firstName && lastName && phoneNumber) {
             try {
                 dispatch(setUserLoading(true));
 
@@ -46,26 +48,33 @@ export default function PersonalInfoScreen({route,}) {
 
                 // Reload user to make sure the display name is updated
                 await user.reload();
+                dispatch(updateUser({
+                    firstName,
+                    lastName,
+                    email,
+                    firebaseUid: user.uid,
+                  }));
 
-                console.log('Updated Display Name:', user.displayName); // Log display name after setting
+                  // ✅ Sync with Django Backend
+            const response = await axios.post('http://192.168.1.96:8000/users/', {
+                first_name: firstName,    // ✅ snake_case
+                last_name: lastName,      // ✅ snake_case
+                email: email,
+                phone_number: phoneNumber,
+                firebase_uid: user.uid,
+            }, {
+                headers: { 'Content-Type': 'application/json' },
+            });
+            console.log('✅ Django API Response:', response.data);
 
-                dispatch(updateUser({ firstName, lastName, email}));
+            dispatch(setUserLoading(false));
+            navigation.navigate('Home');
 
-                console.log('First name:', firstName, 'Last name:', lastName);
-                
-
-                dispatch(setUserLoading(false));
-                navigation.navigate('Home',); // Navigate to home or profile screen
-            } catch (e) {
-                dispatch(setUserLoading(false));
-                console.error("Error creating user: ", e); // Log the actual error for debugging
-                //Toast.show({
-                    //type: 'custom_error',
-                   // text1: 'Error',
-                  //  text2: 'Failed. Please try again.',
-                    //position: 'bottom',
-               // });
-            }
+ 
+        } catch (error) {
+            dispatch(setUserLoading(false));
+      console.error('❌ Error:', error.response?.data || error.message);
+    }
         } else {
             Toast.show({
                 type: 'custom_error',
@@ -105,6 +114,18 @@ export default function PersonalInfoScreen({route,}) {
                         value = {lastName}
                         onChangeText={value=> setLastName(value)}
                         placeholder='Enter your legal last name'
+                        placeholderTextColor={colors.black}
+                        style={{
+                            width: "100%"
+                        }}
+                    />
+                </View>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', marginVertical: 8 }}> Phone Number</Text>
+                <View style={{ width: "100%", height: 48, borderColor: colors.black, borderWidth: 1, borderRadius: 8, alignItems: "center", justifyContent: "center", paddingLeft: 22 }}>
+                    <TextInput
+                        value = {phoneNumber}
+                        onChangeText={value=> setPhoneNumber(value)}
+                        placeholder='Enter your phone number'
                         placeholderTextColor={colors.black}
                         style={{
                             width: "100%"
